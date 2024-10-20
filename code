@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoFog: San Francisco's Blockchain Adventure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #game-container {
+            text-align: center;
+        }
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .cell {
+            width: 60px;
+            height: 60px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .fog {
+            background-color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>CryptoFog: San Francisco's Blockchain Adventure</h1>
+        <div id="game-board"></div>
+        <p>Fog Coins: <span id="fog-coins">10</span></p>
+        <p>NFTs Collected: <span id="nfts-collected">0</span></p>
+    </div>
+
+    <script>
+        const gameBoard = document.getElementById('game-board');
+        const fogCoinsDisplay = document.getElementById('fog-coins');
+        const nftsCollectedDisplay = document.getElementById('nfts-collected');
+
+        let fogCoins = 10;
+        let nftsCollected = 0;
+
+        const sfSymbols = ['🌉', '🏠', '🍞', '🚊', '🦀'];
+
+        function createGameBoard() {
+            for (let i = 0; i < 25; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell', 'fog');
+                cell.addEventListener('click', () => revealCell(cell));
+                gameBoard.appendChild(cell);
+            }
+        }
+
+        function revealCell(cell) {
+            if (fogCoins > 0 && cell.classList.contains('fog')) {
+                fogCoins--;
+                fogCoinsDisplay.textContent = fogCoins;
+                cell.classList.remove('fog');
+                
+                if (Math.random() < 0.3) {
+                    const randomSymbol = sfSymbols[Math.floor(Math.random() * sfSymbols.length)];
+                    cell.textContent = randomSymbol;
+                    nftsCollected++;
+                    nftsCollectedDisplay.textContent = nftsCollected;
+                }
+            }
+        }
+
+        createGameBoard();
+    </script>
+</body>
+</html>
